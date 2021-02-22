@@ -10,6 +10,14 @@ import java.util.List;
 public interface CredentialsMapper {
 
     @Select("SELECT * FROM CREDENTIALS WHERE userid = #{userid}")
+    @Results({
+            @Result(id = true, property = "credentialsId", column = "credentialid"),
+            @Result(property = "url", column = "url"),
+            @Result(property = "userName", column = "username"),
+            @Result(property = "key", column = "key"),
+            @Result(property = "password", column = "password"),
+            @Result(property = "userId", column = "userid")
+    })
     List<Credentials> getUserCredentials(Integer userid);
 
     @Insert("INSERT INTO CREDENTIALS (url,username,key,password,userid) VALUES(#{url},#{userName},#{key},#{password},#{userId})")
@@ -17,7 +25,7 @@ public interface CredentialsMapper {
     int insert(Credentials credentials);
 
     @Select("SELECT * FROM CREDENTIALS WHERE credentialid = #{credentialsId}")
-    Credentials getCredentials(Integer credentialsId);
+    Credentials getCredential(Integer credentialsId);
 
     @Update("UPDATE CREDENTIALS SET url = #{url}, username = #{userName}, password = #{password} WHERE credentialid = #{credentialsId}")
     Integer update(Integer credentialsId, String url, String userName, String password);
